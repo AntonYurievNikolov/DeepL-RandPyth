@@ -8,8 +8,11 @@
 
 
 #cuDNN
-#%USERPROFILE%\cuda
-
+# %USERPROFILE%\cuda
+# %CUDA_Installation_directory%\bin\cudnn64_7.dll
+# % CUDA_Installation_directory %\include\cudnn.h
+# % CUDA_Installation_directory %\lib\x64\cudnn.lib
+# C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA
 library(keras)
 library(tensorflow)
 #GPU
@@ -18,14 +21,14 @@ library(tensorflow)
 
 #CPU - work. 
 # install_tensorflow()
-install_keras()
+# install_keras()
 
 
 
 
 ####TEst#####
 #Check available devices
-# library(keras)
+library(keras)
 # # use_condaenv("r-tensorflow")
 # k<-backend()
 # sess <-k$get_session()
