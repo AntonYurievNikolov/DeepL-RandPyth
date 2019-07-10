@@ -147,27 +147,28 @@ grid.raster(generate_pattern("block3_conv1", 1))
 library(grid)
 library(gridExtra)
 dir.create("vgg_filters")
-for (layer_name in c("block1_conv1", "block2_conv1", 
-                     "block3_conv1", "block4_conv1")) {
-  size <- 140
-  
-  png(paste0("vgg_filters/", layer_name, ".png"),
-      width = 8 * size, height = 8 * size)
-  
-  grobs <- list()
-  for (i in 0:7) {
-    for (j in 0:7) {
-      pattern <- generate_pattern(layer_name, i + (j*8) + 1, size = size)
-      grob <- rasterGrob(pattern, 
-                         width = unit(0.9, "npc"), 
-                         height = unit(0.9, "npc"))
-      grobs[[length(grobs)+1]] <- grob
-    }  
-  }
-  
-  grid.arrange(grobs = grobs, ncol = 8)
-  dev.off()
-}
+#This melted the CPU - need to try it out with GPU
+# for (layer_name in c("block1_conv1", "block2_conv1", 
+#                      "block3_conv1", "block4_conv1")) {
+#   size <- 140
+#   
+#   png(paste0("vgg_filters/", layer_name, ".png"),
+#       width = 8 * size, height = 8 * size)
+#   
+#   grobs <- list()
+#   for (i in 0:7) {
+#     for (j in 0:7) {
+#       pattern <- generate_pattern(layer_name, i + (j*8) + 1, size = size)
+#       grob <- rasterGrob(pattern, 
+#                          width = unit(0.9, "npc"), 
+#                          height = unit(0.9, "npc"))
+#       grobs[[length(grobs)+1]] <- grob
+#     }  
+#   }
+#   
+#   grid.arrange(grobs = grobs, ncol = 8)
+#   dev.off()
+# }
 #Vizualize heatmap of class activation#####
 #check this https://arxiv.org/abs/1610.02391.
 #To do - Check the sample code, just read so far
