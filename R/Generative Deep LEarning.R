@@ -2,10 +2,11 @@
 #Creating the corpus
 library(keras)
 library(stringr)
-# path <- get_file(
-#   "nietzsche.txt",
-#   origin = "https://s3.amazonaws.com/text-datasets/nietzsche.txt"
-# )
+use_condaenv("base")
+path <- get_file(
+  "nietzsche.txt",
+  origin = "https://s3.amazonaws.com/text-datasets/nietzsche.txt"
+)
 text <- tolower(readChar(path, file.info(path)$size))
 cat("Corpus length:", nchar(text), "\n")
 
@@ -40,16 +41,17 @@ for (i in 1:length(sentences)) {
 }
 
 #Initiliaize the model again if needed
-# model <- keras_model_sequential() %>% 
-#   layer_lstm(units = 128, input_shape = c(maxlen, length(chars))) %>% 
+# model <- keras_model_sequential() %>%
+#   layer_lstm(units = 128, input_shape = c(maxlen, length(chars))) %>%
 #   layer_dense(units = length(chars), activation = "softmax")
 # 
 # 
 # optimizer <- optimizer_rmsprop(lr = 0.01)
 # model %>% compile(
-#   loss = "categorical_crossentropy", 
+#   loss = "categorical_crossentropy",
 #   optimizer = optimizer
-# )   
+# )
+#Load the model after the first iteration
 model<-load_model_hdf5("Nizhe.h5", custom_objects = NULL, compile = TRUE)
 
 #Sampling the text
@@ -61,13 +63,14 @@ sample_next_char <- function(preds, temperature = 1.0) {
   which.max(t(rmultinom(1, 1, preds)))
 }
 
-
-for (epoch in 1:2) { #was 60 initially
+# model %>% fit(x, y, batch_size = 2048, epochs = 1) 
+# model %>% fit(x, y, batch_size = 2048, epochs = 10) 
+for (epoch in 1:2) { #was 60 initially so far 37
   
   cat("epoch", epoch, "\n")
   
   # Fit the model for 1 epoch on the available training data
-  model %>% fit(x, y, batch_size = 128, epochs = 1) 
+  model %>% fit(x, y, batch_size = 1024, epochs = 1)  #was 128, but my video can handle much mroe/2048 seems to be perfect
   
   # Select a text seed at random
   start_index <- sample(1:(nchar(text) - maxlen - 1), 1)  
@@ -75,7 +78,11 @@ for (epoch in 1:2) { #was 60 initially
   seed_text<-" hard as anal sex view of his beholders. he was neither a ma"
   cat("--- Generating with seed:", seed_text, "\n\n")
   
-  for (temperature in c(0.2, 0.5, 1.0, 1.2)) {
+  for (temperature in c( 0.5, 1.0)
+       
+       # c(0.2, 0.5, 1.0, 1.2) #Original Values
+       
+       ) {
     
     cat("------ temperature:", temperature, "\n")
     cat(seed_text, "\n")
@@ -105,7 +112,7 @@ for (epoch in 1:2) { #was 60 initially
   }
 }
 
-# save_model_hdf5(model, "Nizhe.h5")
+save_model_hdf5(model, "Nizhe.h5") #37, 1.2691 loss
 
 #Deep Dreams/Natural Style Transfer - HARD SKIP####
 #Repo With sample at 

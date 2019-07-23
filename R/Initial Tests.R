@@ -3,8 +3,8 @@
 #%USERPROFILE%\Anaconda3\Library\bin
 #%USERPROFILE%\Anaconda3
 
-# install.packages("keras")
-# install.packages("tensorflow")
+install.packages("keras")
+install.packages("tensorflow")
 
 
 #cuDNN
@@ -12,27 +12,36 @@
 # %CUDA_Installation_directory%\bin\cudnn64_7.dll
 # % CUDA_Installation_directory %\include\cudnn.h
 # % CUDA_Installation_directory %\lib\x64\cudnn.lib
-# C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA
+# C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1
+# new setup
+# C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin\
+# C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\libnvvp
+# C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\lib\x64
 library(keras)
 library(tensorflow)
 #GPU
+# Works if 
 # install_tensorflow(version = "gpu")
 # install_keras(tensorflow = "gpu")
 
-#CPU - work. 
+
+#CPU - work. If you install the latest tensorflow_gpu manually. Or switch to base Env for permissions
+# use_condaenv("base")
 # install_tensorflow()
 # install_keras()
 
-
-
+# Conda Env Test
+# conda create --name tf_gpu tensorflow-gpu 
+# activate r_tensorflow
+# conda install tensorflow-gpu
 
 ####TEst#####
 #Check available devices
 library(keras)
-# # use_condaenv("r-tensorflow")
-# k<-backend()
-# sess <-k$get_session()
-# sess$list_devices()
+# #
+k<-backend()
+sess <-k$get_session()
+sess$list_devices()
 
 
 # input layer: use MNIST images
