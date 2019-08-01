@@ -2,7 +2,7 @@
 #Creating the corpus
 library(keras)
 library(stringr)
-use_condaenv("base")
+#use_condaenv("base")
 path <- get_file(
   "nietzsche.txt",
   origin = "https://s3.amazonaws.com/text-datasets/nietzsche.txt"
@@ -112,7 +112,7 @@ for (epoch in 1:2) { #was 60 initially so far 37
   }
 }
 
-save_model_hdf5(model, "Nizhe.h5") #37, 1.2691 loss
+save_model_hdf5(model, "Nizhe.h5") #39, 1.2611 loss
 
 #Deep Dreams/Natural Style Transfer - HARD SKIP####
 #Repo With sample at 
